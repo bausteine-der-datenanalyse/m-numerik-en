@@ -1,0 +1,169 @@
+## Interpolation
+
+```{python}
+#| echo: false
+import copy
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy
+import seaborn as sns
+```
+
+In the formation of the upper and lower sums, the function to be integrated was approximated by a constant value in the subintervals between the support points. A more accurate calculation of the integral can be achieved through better interpolation. Polynomials are suitable for this because they are easy to integrate.
+
+### Trapezoidal Rule
+
+The trapezoidal rule is based on approximating the function to be integrated by straight lines, i.e., polynomials of degree 1, over the subintervals. The approximation of the integral value results accordingly from the areas of the resulting trapezoids.
+
+As in the previous chapter, the method is demonstrated using the following function:
+
+$$ \mathsf{I = \int_0^2\sin(3x) + 2x \ dx} $$
+
+```{python}
+def func(x):
+    return np.sin(3*x) + 2*x
+
+# Data for visualization
+x = np.linspace(0, 2, 100)
+y = func(x)
+
+# Exact solution
+I_exact = (-1/3*np.cos(3*2) + 2**2) - (-1/3)
+```
+
+Generation of support points
+
+```{python}
+n = 5
+
+xi = np.linspace(0, 2, n)
+yi = func(xi)
+```
+
+First, we visualize the method.
+
+```{python}
+plt.plot(x, y, label='Function')
+plt.scatter(xi, yi, label='Support Points', c='C3')
+plt.plot(xi, yi, label='Approximation', c='C1')
+
+plt.vlines(xi, ymin=0, ymax=yi, color='C1', alpha=0.3)
+
+plt.grid()
+plt.legend();
+```
+
+The integration itself can be performed using the [function `scipy.integrate.trapezoid`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.trapezoid.html#scipy.integrate.trapezoid).
+
+```{python}
+res = scipy.integrate.trapezoid(yi, xi)
+print(f"Integral value with {n} sample points: {res:.4f}")
+```
+
+The computed value approaches the exact value as the number of support points increases.
+
+```{python}
+n_max = 50
+ns = np.arange(2, n_max, 1, dtype=int)
+tr = np.zeros(len(ns))
+
+for i, n in enumerate(ns):
+    xi = np.linspace(0, 2, n)
+    yi = func(xi)
+    tr[i] = scipy.integrate.trapezoid(yi, xi)
+```
+
+```{python}
+plt.plot(ns, tr)
+plt.axhline(y=I_exact, color='C3', alpha=0.3)
+
+plt.xlabel('Number of support points n')
+plt.ylabel('Integral value')
+
+plt.grid();
+```
+
+```{python}
+plt.plot(ns, np.abs(tr-I_exact))
+
+plt.xlabel('Number of support points n')
+plt.ylabel('Difference from exact value')
+
+# plt.xscale('log')
+plt.yscale('log')
+
+plt.grid();
+```
+
+### Simpson's Rule
+
+Using a second-degree polynomial leads to Simpson's rule.  
+Here, the function is evaluated at a midpoint within each subinterval,  
+and this value, together with the values at the endpoints, is used to determine  
+the polynomial coefficients.
+
+The example above visually demonstrates Simpson's rule.
+
+```{python}
+n = 5
+
+xi = np.linspace(0, 2, n)
+yi = func(xi)
+```
+
+```{python}
+plt.plot(x, y, label='Function')
+plt.scatter(xi, yi, label='Data Points', c='C3')
+
+# Compute and plot the polynomials
+for i in range(n-1):
+    dx = xi[i+1] - xi[i]
+    cx = (xi[i] + xi[i+1]) / 2
+    cy = func(cx)
+
+    P = np.polyfit([xi[i], cx, xi[i+1]], [yi[i], cy, yi[i+1]], 2)
+    
+    Px = np.linspace(xi[i], xi[i+1], 20)
+    Py = np.polyval(P, Px)
+    
+    label=None
+    if i==0: 
+        label='Approximation'
+    
+    plt.plot(Px, Py, color='C1', label=label)
+
+plt.vlines(xi, ymin=0, ymax=yi, color='C1', alpha=0.3)
+
+plt.grid()
+plt.legend();
+```
+
+The Simpson's rule is already implemented in [function `scipy.integrate.simpson`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simpson.html#scipy.integrate.simpson). Below, only the difference to the trapezoidal rule is demonstrated.
+
+```{python}
+n_max = 50
+ns = np.arange(3, n_max, 2, dtype=int)
+si = np.zeros(len(ns))
+tr = np.zeros(len(ns))
+
+for i, n in enumerate(ns):
+    xi = np.linspace(0, 2, n)
+    yi = func(xi)
+    si[i] = scipy.integrate.simpson(yi, xi)
+    tr[i] = scipy.integrate.trapezoid(yi, xi)
+```
+
+```{python}
+#| tags: []
+plt.plot(ns, np.abs(tr-I_exact), label='Trapezoidal Rule')
+plt.plot(ns, np.abs(si-I_exact), label='Simpson\'s Rule')
+
+plt.xlabel('Number of support points n')
+plt.ylabel('Difference from Exact Value')
+
+# plt.xscale('log')
+plt.yscale('log')
+
+plt.legend()
+plt.grid();
+```

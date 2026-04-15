@@ -1,0 +1,175 @@
+### Upper and Lower Sum
+
+```{python}
+#| tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+One of the most fundamental ways to compute integrals of functions is through the 
+[upper and lower sums](https://en.wikipedia.org/wiki/Riemann_integral). 
+They approximate the integral by bounding it from above and below. 
+As the number of sample points, i.e., positions where the function is evaluated, increases, both bounds converge to the true integral value.
+
+## Definition
+
+To construct the upper and lower sums, evenly spaced 
+sample points on the interval $\mathsf{[a,b]}$ are required. If $\mathsf{n+1}$ 
+sample points are chosen, we have:
+
+$$ a = x_0 < x_1 < \cdots < x_n = b $$
+
+The spacing between the points is $\mathsf{\Delta x = (b-a)/(n-1)}$. On 
+each of the $\mathsf{n}$ subintervals $\mathsf{[x_{i-1}, x_{i}]}$, the 
+maximum and minimum values of the function $\mathsf{f(x)}$ are determined 
+and defined as $\mathsf{O_i}$ and $\mathsf{U_i}$, respectively.
+
+$$ \mathsf{O_i = \max\left( f(x) | x \in [x_{i-1}, x_{i}] \right)} $$
+$$ \mathsf{U_i = \min\left( f(x) | x \in [x_{i-1}, x_{i}] \right)} $$
+
+The desired approximation of the integral is the sum of $\mathsf{O_i}$ 
+and $\mathsf{U_i}$ multiplied by the width of the subinterval, $\mathsf{\Delta x}$:
+
+$$ \sum_{i=1}^n \Delta x U_i \lesssim I \lesssim \sum_{i=1}^n \Delta x O_i $$
+
+## Example
+
+As an example, consider the following integral:
+
+$$ \mathsf{I = \int_0^2\sin(3x) + 2x \ dx} $$
+
+```{python}
+def func(x):
+    return np.sin(3*x) + 2*x
+
+# Data for visualization
+x = np.linspace(0, 2, 100)
+y = func(x)
+
+# Exact solution
+I_exact = (-1/3*np.cos(3*2) + 2**2) - (-1/3)
+```
+
+
+
+First, the support points are evenly distributed in the interval $\mathsf{[0,2]}$.
+
+```{python}
+n = 5
+
+xi = np.linspace(0, 2, n)
+yi = func(xi)
+```
+
+Both sums require the extreme values of the function to be integrated within the subintervals. These are determined by evaluating the function on the subinterval. For the following visualization, the set of sums also has n elements.
+
+```{python}
+upper = np.zeros(n)
+lower = np.zeros(n)
+
+for i in range(len(upper)-1): 
+    cx = np.linspace(xi[i], xi[i+1], 50)
+    cy = func(cx)
+    upper[i+1] = np.max(cy)
+    lower[i+1] = np.min(cy)
+```
+
+
+
+
+The first elements of the two cumulative lists are set to the first function values, this is only for the subsequent display.
+
+```{python}
+upper[0] = yi[0]
+lower[0] = yi[0]
+```
+
+
+Visualization of individual functions
+
+```{python}
+plt.plot(x, y, label='Function')
+plt.scatter(xi, yi, label='Sampling points', c='C3', zorder=3)
+plt.plot(xi, upper, drawstyle='steps-pre', label='Upper sum')
+plt.plot(xi, lower, drawstyle='steps-pre', label='Lower sum')
+
+plt.vlines(xi, ymin=lower, ymax=upper, color='C1', alpha=0.6)
+plt.vlines(xi, ymin=0, ymax=lower, color='C2', alpha=0.6)
+
+plt.xlabel('x')
+plt.ylabel('y')
+
+plt.grid()
+plt.legend();
+```
+
+The above procedure can now be summarized in a function that returns the sums of the two sequences.
+
+```{python}
+def up_down_sum(n, start=0, end=2):
+    x_vals = np.linspace(start, end, n)
+    y_vals = func(x_vals)
+    dx = x_vals[1] - x_vals[0]
+    
+    sum_upper = 0
+    sum_lower = 0
+    
+    for i in range(n-1): 
+        sub_x = np.linspace(x_vals[i], x_vals[i+1], 50)
+        sub_y = func(sub_x)
+        upper = np.max(sub_y)
+        lower = np.min(sub_y)
+        sum_upper += dx * upper
+        sum_lower += dx * lower
+    
+    return sum_upper, sum_lower
+```
+
+
+For a systematic study of convergence behavior, the integration function is called for different numbers of nodes.
+
+```{python}
+n_max = 100
+ns = np.arange(2, n_max, 1, dtype=int)
+os = np.zeros(len(ns))
+us = np.zeros(len(ns))
+
+for i, n in enumerate(ns):
+    o, u = up_down_sum(n)
+    os[i] = o
+    us[i] = u
+```
+
+
+
+The graphical representation of the two sums shows a continuous convergence of these.
+
+```{python}
+plt.plot(ns, os, label='Upper sum')
+plt.plot(ns, us, label='Lower sum')
+
+plt.axhline(y=I_exact, color='C3', alpha=0.3)
+
+plt.xlabel('Number of support points n')
+plt.ylabel('Integral value')
+
+plt.grid()
+plt.legend();
+```
+
+
+This becomes particularly evident when the difference between the two sums is plotted. With a logarithmic representation, the continuous convergence can also be read quantitatively.
+
+```{python}
+#| tags: []
+plt.plot(ns, os-us)
+
+plt.xlabel('Number of sampling points n')
+plt.ylabel('Difference between upper and lower sum')
+
+# plt.xscale('log')
+plt.yscale('log')
+
+plt.grid();
+```

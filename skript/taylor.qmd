@@ -1,0 +1,77 @@
+## Taylor Expansion
+
+```{python}
+#| echo: false
+import copy
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy
+import seaborn as sns
+```
+
+Using the [Taylor expansion](https://en.wikipedia.org/wiki/Taylor_series), any function $\mathsf{f(x)}$ that is continuously differentiable any number of times can be approximated arbitrarily closely around an expansion point $\mathsf{x_0}$. The functional dependence is now considered with respect to the variable $\mathsf{h}$, which is only examined in the immediate vicinity of $\mathsf{x_0}$. The Taylor expansion is given by:
+
+$$ \mathsf{f(x_0 + h) = \sum_{i=0}^{\infty}\frac{1}{i!}f^{(i)}(x_0)\cdot h^i} $$
+$$ \mathsf{ = f(x_0) + f'(x_0)\cdot h + \frac{1}{2} f''(x_0)\cdot h^2 + \frac{1}{6}f'''(x_0)\cdot h^3 + \cdots} $$
+
+This expansion can also be considered only up to a given order. For example, the expansion up to order $\mathsf{ \mathcal{O}(h^3)}$ takes the form:
+
+$$\mathsf{ f(x_0 + h) = f(x_0) + f'(x_0)\cdot h + \frac{1}{2} f''(x_0)\cdot h^2 + \mathcal{O}(h^3)} $$
+
+Here, the Landau symbol $\mathsf{\mathcal{O}}$ indicates the order, summarizing the neglected terms, here starting from 
+$\mathsf{h^3}$, as an approximation error. The order specifies how quickly or with which functional relationship the approximation error approaches zero as $\mathsf{h \rightarrow 0}$.
+
+A graphical representation of the first elements of the series further illustrates the basic idea. The following example expands the function
+
+$$ \mathsf{f(x) = \sin(3x) + 2x} $$
+
+around the point $\mathsf{x_0=0.85}$.
+
+```{python}
+#| tags: [hide_input]
+def func(x, p=0):
+    if p==0:
+        return np.sin(3*x) + 2*x
+    if p==1:
+        return 3*np.cos(3*x) + 2
+    if p==2:
+        return -9*np.sin(3*x)
+    if p==3:
+        return -27*np.cos(3*x)
+    return None
+
+# Data for visualization
+x = np.linspace(0, 2, 100)
+y = func(x, p=0)
+```
+
+```{python}
+#| tags: [hide_input]
+x0 = 0.85
+
+# Taylor elements
+te = []
+te.append(0*(x-x0) + func(x0, p=0))
+te.append((x-x0) * func(x0, p=1))
+te.append((x-x0)**2 * func(x0, p=2) * 1/2)
+te.append((x-x0)**3 * func(x0, p=3) * 1/6)
+```
+
+```{python}
+#| tags: [hide_input]
+plt.plot(x, y, color='Grey', lw=3, label="Function")
+plt.plot(x, te[0], label=r"$\mathsf{\mathcal{O}(1)}$")
+plt.plot(x, te[0] + te[1], label=r"$\mathsf{\mathcal{O}(h)}$")
+plt.plot(x, te[0] + te[1] + te[2], label=r"$\mathsf{\mathcal{O}(h^2)}$")
+plt.plot(x, te[0] + te[1] + te[2] + te[3], label=r"$\mathsf{\mathcal{O}(h^3)}$")
+
+plt.vlines(x0, ymin=0, ymax=func(x0), color='Grey', ls='--', alpha=0.5)
+
+plt.ylim([0,4])
+
+plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
+plt.grid()
+plt.xlabel('x')
+plt.ylabel('y');
+```
+

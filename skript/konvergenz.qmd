@@ -1,0 +1,153 @@
+## Error Analysis
+
+```{python}
+#| echo: false
+import copy
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy
+import seaborn as sns
+```
+
+In this section, approximation errors, i.e., errors arising from difference formulas, and rounding errors, i.e., errors due to the finite precision of digital number representation, are considered.
+
+### Approximation Error
+
+The order of the method can be determined by analyzing the error, here with respect to the known exact value. For this purpose, the step size is continuously reduced.
+
+```{python}
+#| code-fold: true
+#| tags: [hide-input]
+def func(x):
+    return np.sin(3*x) + 2*x
+
+# Data for visualization
+x = np.linspace(0, 2, 100)
+y = func(x)
+
+# Exact solution at x=1
+fp_exact = 3*np.cos(3*0.85) + 2
+```
+
+
+
+
+
+```{python}
+#| code-fold: true
+#| tags: [hide-input]
+x0 = 0.85
+
+hs = []
+fpfs = []
+fpcs = []
+
+h0 = 1
+for i in range(18):
+    h = h0 / 2**i
+
+    f0 = func(x0)
+    fnh = func(x0 - h)
+    fph = func(x0 + h)
+
+    fpf = (fph - f0) / h
+    fpc = (fph - fnh) / (2*h)
+    
+    hs.append(h)
+    fpfs.append(fpf)
+    fpcs.append(fpc)
+```
+
+
+```{python}
+#| code-fold: true
+#| tags: [hide-input]
+plt.plot(hs, np.abs(fpfs - fp_exact), label='forward')
+plt.plot(hs, np.abs(fpcs - fp_exact), label='central')
+
+plt.plot([1e-5, 1e-1], [1e-5, 1e-1], '--', color='grey', label='reference lines')
+plt.plot([1e-5, 1e-1], [1e-10, 1e-2], '--', color='grey')
+
+plt.xlabel('Step size h')
+plt.ylabel('Error')
+
+plt.xscale('log')
+plt.yscale('log')
+
+plt.legend()
+plt.grid();
+```
+
+In the logarithmic representation of both axes, power functions become straight lines with the exponent as the slope. This means that the error in the above plot behaves like a power function of degree one and two, respectively. The reference lines that are drawn have slopes of one and two, respectively. This also corresponds to the order $\mathsf{\mathcal{O}(h)}$ and $\mathsf{\mathcal{O}(h^2)}$ from the difference formula.
+
+### Rounding Errors
+
+If the step size is reduced even further, the precision of number representation, i.e., rounding errors, begins to affect the approximation.
+
+```{python}
+#| code-fold: true
+#| tags: [hide-input]
+x0 = 0.85
+
+hs = []
+fpfs = []
+fpcs = []
+
+
+h0 = 1
+for i in range(35):
+    h = h0 / 2**i
+
+    f0 = func(x0)
+    fnh = func(x0 - h)
+    fph = func(x0 + h)
+
+    fpf = (fph - f0) / h
+    fpc = (fph - fnh) / (2*h)
+    
+    hs.append(h)
+    fpfs.append(fpf)
+    fpcs.append(fpc)
+```
+
+
+
+
+
+
+
+```{python}
+#| code-fold: true
+#| tags: [hide-input]
+plt.plot(hs, np.abs(fpfs - fp_exact), label='forward')
+plt.plot(hs, np.abs(fpcs - fp_exact), label='central')
+
+plt.plot([1e-5, 1e-1], [1e-5, 1e-1], '--', color='grey', label='reference lines')
+plt.plot([1e-5, 1e-1], [1e-10, 1e-2], '--', color='grey')
+
+plt.xlabel('Step size h')
+plt.ylabel('Error')
+
+plt.xscale('log')
+plt.yscale('log')
+
+plt.legend()
+plt.grid();
+```
+
+As previously introduced, 64-bit numbers can only be represented with a precision of 
+approximately $\mathsf{\epsilon\approx10^{-16}}$. This means that, for example, the difference between two numbers cannot be computed more accurately than $\mathsf{\epsilon}$. This is the so-called rounding error.
+
+In the specific case of the forward difference formula, this implies:
+
+$$ \mathsf{f'(x_0) = \frac{f(x_0 + h) - f(x_0)}{h} + \mathcal{O}(h)} $$
+$$\mathsf{\overset{rounding\ error}{\Rightarrow} \frac{f(x_0 + h) - f(x_0) + \mathcal{O}(\epsilon)}{h} + \mathcal{O}(h)} $$
+$$ \mathsf{= \frac{f(x_0 + h) - f(x_0)}{h} + \mathcal{O}\left(\frac{\epsilon}{h}\right) + \mathcal{O}(h)} $$
+
+Hence, reducing $\mathsf{h}$ only makes sense as long as the rounding error is small compared to $\mathsf{h}$. More precisely:
+
+$$\mathsf{\frac{\epsilon}{h} \le h }$$
+$$\mathsf{\Rightarrow \quad h \ge \sqrt{\epsilon}} $$
+
+With $\mathsf{\epsilon \approx 10^{-16}}$, for this difference formula, a 
+$\mathsf{h}$ is only reasonable down to about $\mathsf{10^{-8}}$.

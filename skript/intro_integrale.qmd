@@ -1,0 +1,19 @@
+## Integration
+
+The computation of integrals is used, for example, in determining areas or total forces. Formally, the definite integral $\mathsf{I}$ of the function $\mathsf{f(x)}$ over the interval $\mathsf{x \in [a,b]}$ is represented as follows:
+
+$$ \mathsf{I = \int_a^b f(x)\ dx} $$
+
+In general, the integral cannot be solved analytically, as the antiderivative $\mathsf{F(x)}$ is not easy to determine. In such cases, numerical methods can be used to approximate the integral value. Numerical integration is often also referred to as numerical quadrature.
+
+This chapter provides a brief overview of numerical integration methods:
+
+* Upper and lower sums
+* Quadrature
+* Monte Carlo
+
+{{< include oberuntersumme.qmd >}}
+
+{{< include interpolation.qmd >}}
+
+{{< include montecarlo.qmd >}}

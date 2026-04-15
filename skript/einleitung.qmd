@@ -1,0 +1,13 @@
+# Numerical Methods
+
+[Numerical methods](https://en.wikipedia.org/wiki/Numerical_analysis) are a branch of mathematics that focuses on techniques for finding solutions or approximate solutions to problems that cannot be solved analytically.
+
+This includes areas such as integration and differentiation, as well as differential equations. Many engineering simulation programs use numerical methods to compute complex scenarios. In particular, solving ordinary and partial differential equations would be nearly impossible without numerical methods.
+
+Applications include, for example:
+
+* Deformation of bodies under applied forces
+* Vibrations of buildings
+* Temporal evolution of substance concentrations
+* Fluid dynamics: hydraulic engineering, flow around buildings, ventilation, smoke dispersion
+* Heat transfer in components

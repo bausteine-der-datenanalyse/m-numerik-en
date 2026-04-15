@@ -1,0 +1,13 @@
+## Differentiation
+
+The numerical calculation of derivatives is demonstrated here using two approaches: first, as a difference quotient, and second, through polynomial fitting. These methods are applied, for example, when searching for extrema in experimental or simulation data, solving differential equations, or performing optimization procedures.
+
+Although analytically computing a derivative is often much easier than integration, it is not directly possible in the cases mentioned above. The goal is always to find the derivative $\mathsf{f'(x)}$ of a function $\mathsf{f(x)}$ or of a discrete set of points $\mathsf{(x_i, y_i)}$ at a specific location $\mathsf{x=x_0}$ or over an interval.
+
+The basic idea behind the difference quotients or difference formulas presented here is to approximate the function to be differentiated using a Taylor expansion at multiple points. This allows solving for the desired derivative at the corresponding expansion point.
+
+{{< include taylor.qmd >}}
+
+{{< include differenzenquotienten.qmd >}}
+
+{{< include konvergenz.qmd >}}

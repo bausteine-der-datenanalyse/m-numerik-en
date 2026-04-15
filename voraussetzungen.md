@@ -1,0 +1,3 @@
+- Python Basics
+- Importing Additional Packages
+- Plotting with Matplotlib
