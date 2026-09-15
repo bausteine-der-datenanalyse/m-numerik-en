@@ -12,13 +12,13 @@ book:
     - Maik Poetzsch
     - Sebastian Seipel
   date: today
-  language: de-DE
+  language: en-US
   downloads: [pdf]
-  repo-url: "https://github.com/bausteine-der-datenanalyse/m-numerik"
+  repo-url: "https://github.com/bausteine-der-datenanalyse/m-numerik-en"
   repo-actions: [source]
   favicon: "skript/00-bilder/favicon_bcd_new.svg"
   sidebar:
-    title: "Methodenbaustein Numerik"
+    title: "Numerics Module"
     logo: "skript/00-bilder/logo_bcd_new.svg"
 
 bibliography: skript/references.bib
@@ -26,11 +26,11 @@ bibliography: skript/references.bib
 format:
   html:
     theme: [cosmo, theme.scss]
-    lang: de
+    lang: en
     tbl-cap-location: bottom
   pdf:
     documentclass: scrreprt
-    lang: de
+    lang: en
     toc-depth: 1
 
 execute:
