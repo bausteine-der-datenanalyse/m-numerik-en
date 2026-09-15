@@ -9,7 +9,7 @@ import scipy
 import seaborn as sns
 ```
 
-In this section, formulas for approximating derivatives by forming differences of func values are introduced. These formulas are all based on the Taylor expansion and can be formulated for arbitrary derivatives and orders. The simplest ones are presented here.
+In this section, formulas for approximating derivatives by forming differences of function values are introduced. These formulas are all based on the Taylor expansion and can be formulated for arbitrary derivatives and orders. The simplest ones are presented here.
 
 ### First Derivative, First Order
 
@@ -21,9 +21,9 @@ $$\mathsf{\Rightarrow \quad f'(x_0) = \frac{f(x_0 + h) - f(x_0)}{h} + \mathcal{O
 This is the forward difference formula of first order for the first derivative.  
 First order means that in the limit $\mathsf{h\rightarrow 0}$ the approximation error decreases linearly with the step size.
 
-According to this formula, the func to be differentiated must be evaluated at two points $\mathsf{f(x_0)}$ and $\mathsf{f(x_0+h)}$ in order to determine the derivative numerically. In the limit of an arbitrarily small step size, i.e. $\mathsf{h \rightarrow 0}$, this quotient approaches the exact derivative at the point $\mathsf{x_0}$.
+According to this formula, the function to be differentiated must be evaluated at two points $\mathsf{f(x_0)}$ and $\mathsf{f(x_0+h)}$ in order to determine the derivative numerically. In the limit of an arbitrarily small step size, i.e. $\mathsf{h \rightarrow 0}$, this quotient approaches the exact derivative at the point $\mathsf{x_0}$.
 
-The following example demonstrates the approximation using the func
+The following example demonstrates the approximation using the function
 
 $$ \mathsf{f(x) = \sin(3x) + 2x} $$
 
@@ -90,7 +90,7 @@ plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left');
 
 ### Second-Order First Derivative
 
-Using the same approach, a second-order difference formula can also be derived. For this, the func is approximated at the points $\mathsf{x_0-h}$ and $\mathsf{x_0+h}$ using the Taylor series up to order $\mathsf{\mathcal{O}(h^3)}$.
+Using the same approach, a second-order difference formula can also be derived. For this, the function is approximated at the points $\mathsf{x_0-h}$ and $\mathsf{x_0+h}$ using the Taylor series up to order $\mathsf{\mathcal{O}(h^3)}$.
 
 $$\mathsf{f(x_0+h) = f(x_0) + f'(x_0)\cdot h + \frac{1}{2}f''(x_0)\cdot h^2 + \mathcal{O}(h^3)} $$
 $$\mathsf{f(x_0-h) = f(x_0) - f'(x_0)\cdot h + \frac{1}{2}f''(x_0)\cdot h^2 + \mathcal{O}(h^3)} $$
@@ -103,10 +103,10 @@ Rearranging for the derivative at the point $\mathsf{x_0}$ yields
 
 $$\mathsf{f'(x_0) = \frac{f(x_0+h) - f(x_0-h)}{2h} + \mathcal{O}(h^2)} $$
 
-This is the central difference formula for the first derivative with second-order accuracy. As with the forward formula, the func must be evaluated at two points, but not at the expansion point itself. This symmetry around the expansion point results in improved convergence behavior, which is quadratic in this case.
+This is the central difference formula for the first derivative with second-order accuracy. As with the forward formula, the function must be evaluated at two points, but not at the expansion point itself. This symmetry around the expansion point results in improved convergence behavior, which is quadratic in this case.
 
 ```{python}
-# Evaluate the func at both points
+# Evaluate the function at both points
 fmh = func(x0 - h)
 fph = func(x0 + h)
 
