@@ -1,3 +1,3 @@
-Link zum vollen Dokument: [Link](https://bausteine-der-datenanalyse.github.io/m-numerik/output/book/)
+Link to the full document: [Link](https://bausteine-der-datenanalyse.github.io/m-numerik-en/output/book/)
 
 
