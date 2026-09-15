@@ -8,7 +8,7 @@
 Modules for Computer-Assisted Data Analysis. "Numerics" by Lukas Arnold, 
 Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch, and 
 Sebastian Seipel is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en). 
-The work is available at <https://github.com/bausteine-der-datenanalyse/m-numerik>. 
+The work is available at <https://github.com/bausteine-der-datenanalyse/m-numerik-en>.
 All logos and content marked otherwise are excluded from the license. 2024
 
 :::
@@ -17,16 +17,16 @@ Citation Suggestion
 
 Arnold, Lukas, Simone Arnold, Matthias Baitsch, Marc Fehr, Maik Poetzsch, and 
 Sebastian Seipel. 2024. “Modules for Computer-Assisted Data Analysis. 
-Numerics Module.” <https://github.com/bausteine-der-datenanalyse/m-numerik>.
+Numerics Module.” <https://github.com/bausteine-der-datenanalyse/m-numerik-en>.
 
 BibTeX Template
 
 ```
 @misc{BCD-Styleguide-2024,
- title={Bausteine Computergestützter Datenanalyse. Methodenbaustein Numerik},
+ title={Modules for Computer-Assisted Data Analysis. Numerics Module},
  author={Arnold, Lukas and Arnold, Simone and Baitsch, Matthias and Fehr, Marc and Poetzsch, Maik and Seipel, Sebastian},
  year={2024},
- url={https://github.com/bausteine-der-datenanalyse/m-numerik}} 
+ url={https://github.com/bausteine-der-datenanalyse/m-numerik-en}}
 ```
 
 
