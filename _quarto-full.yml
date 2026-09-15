@@ -1,7 +1,8 @@
 project:  
   output-dir: output/book/
 book:
-  chapters: 
+  chapters:
     - index.qmd
+    - skript/einleitung.qmd
     - skript/intro_integrale.qmd
     - skript/intro_ableitungen.qmd
