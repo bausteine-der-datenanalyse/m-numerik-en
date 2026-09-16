@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Differentiation – m-numerik</title>
+<title>3&nbsp; Differentiation – m-numerik</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7e97565b392f382fb7bad5e5f7d3a376.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3a79c8b4f024afbc6085355c069670f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -91,22 +97,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Keine Treffer",
-    "search-matching-documents-text": "Treffer",
-    "search-copy-link-title": "Link in die Suche kopieren",
-    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
-    "search-more-match-text": "weitere Treffer in diesem Dokument",
-    "search-more-matches-text": "weitere Treffer in diesem Dokument",
-    "search-clear-button-title": "Zurücksetzen",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Abbrechen",
-    "search-submit-button-title": "Abschicken",
-    "search-label": "Suchen"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -119,7 +125,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -143,13 +149,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skript/intro_ableitungen.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Differentiation</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../skript/intro_ableitungen.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Differentiation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -161,19 +167,20 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../skript/00-bilder/logo_bcd_new.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../skript/00-bilder/logo_bcd_new.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../skript/00-bilder/logo_bcd_new.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Methodenbaustein Numerik</a> 
+      <a href="../">Numerics Module</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/bausteine-der-datenanalyse/m-numerik" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/bausteine-der-datenanalyse/m-numerik-en" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <a href="../m-numerik.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Suchen"></div>
+        <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -186,14 +193,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../skript/einleitung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Numerical Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../skript/intro_integrale.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Integration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Integration</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../skript/intro_ableitungen.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Differentiation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Differentiation</span></span></a>
   </div>
 </li>
     </ul>
@@ -203,30 +216,30 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Inhaltsverzeichnis</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#taylor-expansion" id="toc-taylor-expansion" class="nav-link active" data-scroll-target="#taylor-expansion"><span class="header-section-number">2.1</span> Taylor Expansion</a></li>
-  <li><a href="#difference-formulas" id="toc-difference-formulas" class="nav-link" data-scroll-target="#difference-formulas"><span class="header-section-number">2.2</span> Difference Formulas</a>
+  <li><a href="#taylor-expansion" id="toc-taylor-expansion" class="nav-link active" data-scroll-target="#taylor-expansion"><span class="header-section-number">3.1</span> Taylor Expansion</a></li>
+  <li><a href="#difference-formulas" id="toc-difference-formulas" class="nav-link" data-scroll-target="#difference-formulas"><span class="header-section-number">3.2</span> Difference Formulas</a>
   <ul class="collapse">
-  <li><a href="#first-derivative-first-order" id="toc-first-derivative-first-order" class="nav-link" data-scroll-target="#first-derivative-first-order"><span class="header-section-number">2.2.1</span> First Derivative, First Order</a></li>
-  <li><a href="#second-order-first-derivative" id="toc-second-order-first-derivative" class="nav-link" data-scroll-target="#second-order-first-derivative"><span class="header-section-number">2.2.2</span> Second-Order First Derivative</a></li>
+  <li><a href="#first-derivative-first-order" id="toc-first-derivative-first-order" class="nav-link" data-scroll-target="#first-derivative-first-order"><span class="header-section-number">3.2.1</span> First Derivative, First Order</a></li>
+  <li><a href="#second-order-first-derivative" id="toc-second-order-first-derivative" class="nav-link" data-scroll-target="#second-order-first-derivative"><span class="header-section-number">3.2.2</span> Second-Order First Derivative</a></li>
   </ul></li>
-  <li><a href="#second-order-derivative" id="toc-second-order-derivative" class="nav-link" data-scroll-target="#second-order-derivative"><span class="header-section-number">2.3</span> Second-Order Derivative</a></li>
-  <li><a href="#error-analysis" id="toc-error-analysis" class="nav-link" data-scroll-target="#error-analysis"><span class="header-section-number">2.4</span> Error Analysis</a>
+  <li><a href="#second-order-derivative" id="toc-second-order-derivative" class="nav-link" data-scroll-target="#second-order-derivative"><span class="header-section-number">3.3</span> Second-Order Derivative</a></li>
+  <li><a href="#error-analysis" id="toc-error-analysis" class="nav-link" data-scroll-target="#error-analysis"><span class="header-section-number">3.4</span> Error Analysis</a>
   <ul class="collapse">
-  <li><a href="#approximation-error" id="toc-approximation-error" class="nav-link" data-scroll-target="#approximation-error"><span class="header-section-number">2.4.1</span> Approximation Error</a></li>
-  <li><a href="#rounding-errors" id="toc-rounding-errors" class="nav-link" data-scroll-target="#rounding-errors"><span class="header-section-number">2.4.2</span> Rounding Errors</a></li>
+  <li><a href="#approximation-error" id="toc-approximation-error" class="nav-link" data-scroll-target="#approximation-error"><span class="header-section-number">3.4.1</span> Approximation Error</a></li>
+  <li><a href="#rounding-errors" id="toc-rounding-errors" class="nav-link" data-scroll-target="#rounding-errors"><span class="header-section-number">3.4.2</span> Rounding Errors</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/m-numerik/blob/main/skript/intro_ableitungen.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/m-numerik-en/blob/main/skript/intro_ableitungen.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Differentiation</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Differentiation</span></h1>
 </div>
 
 
@@ -246,8 +259,8 @@ window.Quarto = {
 <p>The numerical calculation of derivatives is demonstrated here using two approaches: first, as a difference quotient, and second, through polynomial fitting. These methods are applied, for example, when searching for extrema in experimental or simulation data, solving differential equations, or performing optimization procedures.</p>
 <p>Although analytically computing a derivative is often much easier than integration, it is not directly possible in the cases mentioned above. The goal is always to find the derivative <span class="math inline">\(\mathsf{f'(x)}\)</span> of a function <span class="math inline">\(\mathsf{f(x)}\)</span> or of a discrete set of points <span class="math inline">\(\mathsf{(x_i, y_i)}\)</span> at a specific location <span class="math inline">\(\mathsf{x=x_0}\)</span> or over an interval.</p>
 <p>The basic idea behind the difference quotients or difference formulas presented here is to approximate the function to be differentiated using a Taylor expansion at multiple points. This allows solving for the desired derivative at the corresponding expansion point.</p>
-<section id="taylor-expansion" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="taylor-expansion"><span class="header-section-number">2.1</span> Taylor Expansion</h2>
+<section id="taylor-expansion" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="taylor-expansion"><span class="header-section-number">3.1</span> Taylor Expansion</h2>
 <p>Using the <a href="https://en.wikipedia.org/wiki/Taylor_series">Taylor expansion</a>, any function <span class="math inline">\(\mathsf{f(x)}\)</span> that is continuously differentiable any number of times can be approximated arbitrarily closely around an expansion point <span class="math inline">\(\mathsf{x_0}\)</span>. The functional dependence is now considered with respect to the variable <span class="math inline">\(\mathsf{h}\)</span>, which is only examined in the immediate vicinity of <span class="math inline">\(\mathsf{x_0}\)</span>. The Taylor expansion is given by:</p>
 <p><span class="math display">\[ \mathsf{f(x_0 + h) = \sum_{i=0}^{\infty}\frac{1}{i!}f^{(i)}(x_0)\cdot h^i} \]</span> <span class="math display">\[ \mathsf{ = f(x_0) + f'(x_0)\cdot h + \frac{1}{2} f''(x_0)\cdot h^2 + \frac{1}{6}f'''(x_0)\cdot h^3 + \cdots} \]</span></p>
 <p>This expansion can also be considered only up to a given order. For example, the expansion up to order <span class="math inline">\(\mathsf{ \mathcal{O}(h^3)}\)</span> takes the form:</p>
@@ -257,7 +270,7 @@ window.Quarto = {
 <p><span class="math display">\[ \mathsf{f(x) = \sin(3x) + 2x} \]</span></p>
 <p>around the point <span class="math inline">\(\mathsf{x_0=0.85}\)</span>.</p>
 <div id="f16a3d47" class="cell" data-tags="[&quot;hide_input&quot;]" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(x, p<span class="op">=</span><span class="dv">0</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(x, p<span class="op">=</span><span class="dv">0</span>):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p<span class="op">==</span><span class="dv">0</span>:</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sin(<span class="dv">3</span><span class="op">*</span>x) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>x</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p<span class="op">==</span><span class="dv">1</span>:</span>
@@ -270,20 +283,20 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for visualization</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> func(x, p<span class="op">=</span><span class="dv">0</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> func(x, p<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="1004766d" class="cell" data-tags="[&quot;hide_input&quot;]" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Taylor elements</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>te <span class="op">=</span> []</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>te.append(<span class="dv">0</span><span class="op">*</span>(x<span class="op">-</span>x0) <span class="op">+</span> func(x0, p<span class="op">=</span><span class="dv">0</span>))</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>te.append((x<span class="op">-</span>x0) <span class="op">*</span> func(x0, p<span class="op">=</span><span class="dv">1</span>))</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>te.append((x<span class="op">-</span>x0)<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> func(x0, p<span class="op">=</span><span class="dv">2</span>) <span class="op">*</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>te.append((x<span class="op">-</span>x0)<span class="op">**</span><span class="dv">3</span> <span class="op">*</span> func(x0, p<span class="op">=</span><span class="dv">3</span>) <span class="op">*</span> <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>te.append((x<span class="op">-</span>x0)<span class="op">**</span><span class="dv">3</span> <span class="op">*</span> func(x0, p<span class="op">=</span><span class="dv">3</span>) <span class="op">*</span> <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="0a99ebe3" class="cell" data-tags="[&quot;hide_input&quot;]" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, color<span class="op">=</span><span class="st">'Grey'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">"Function"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, color<span class="op">=</span><span class="st">'Grey'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">"Function"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x, te[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"$</span><span class="er">\</span><span class="st">mathsf{</span><span class="er">\</span><span class="st">mathcal</span><span class="sc">{O}</span><span class="st">(1)}$"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x, te[<span class="dv">0</span>] <span class="op">+</span> te[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"$</span><span class="er">\</span><span class="st">mathsf{</span><span class="er">\</span><span class="st">mathcal</span><span class="sc">{O}</span><span class="st">(h)}$"</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.plot(x, te[<span class="dv">0</span>] <span class="op">+</span> te[<span class="dv">1</span>] <span class="op">+</span> te[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"$</span><span class="er">\</span><span class="st">mathsf{</span><span class="er">\</span><span class="st">mathcal</span><span class="sc">{O}</span><span class="st">(h^2)}$"</span>)</span>
@@ -296,7 +309,7 @@ window.Quarto = {
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="fl">1.0</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)<span class="op">;</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>&lt;&gt;:2: SyntaxWarning:
 
@@ -356,11 +369,11 @@ invalid escape sequence '\m'
 </div>
 </div>
 </section>
-<section id="difference-formulas" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="difference-formulas"><span class="header-section-number">2.2</span> Difference Formulas</h2>
+<section id="difference-formulas" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="difference-formulas"><span class="header-section-number">3.2</span> Difference Formulas</h2>
 <p>In this section, formulas for approximating derivatives by forming differences of func values are introduced. These formulas are all based on the Taylor expansion and can be formulated for arbitrary derivatives and orders. The simplest ones are presented here.</p>
-<section id="first-derivative-first-order" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="first-derivative-first-order"><span class="header-section-number">2.2.1</span> First Derivative, First Order</h3>
+<section id="first-derivative-first-order" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="first-derivative-first-order"><span class="header-section-number">3.2.1</span> First Derivative, First Order</h3>
 <p>The simplest difference formula is obtained from the Taylor series up to <span class="math inline">\(\mathsf{\mathcal{O}(h^2)}\)</span>. Here, the series can be directly rearranged for the desired derivative at the point <span class="math inline">\(\mathsf{x_0}\)</span>.</p>
 <p><span class="math display">\[\mathsf{f(x_0 + h) = f(x_0) + f'(x_0)h + \mathcal{O}(h^2)} \]</span> <span class="math display">\[\mathsf{\Rightarrow \quad f'(x_0) = \frac{f(x_0 + h) - f(x_0)}{h} + \mathcal{O}(h)} \]</span></p>
 <p>This is the forward difference formula of first order for the first derivative.<br>
@@ -370,7 +383,7 @@ First order means that in the limit <span class="math inline">\(\mathsf{h\righta
 <p><span class="math display">\[ \mathsf{f(x) = \sin(3x) + 2x} \]</span></p>
 <p>The derivative is approximated at the point <span class="math inline">\(\mathsf{x_0 = 0.85}\)</span>.</p>
 <div id="d0da7834" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(x):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(x):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sin(<span class="dv">3</span><span class="op">*</span>x) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>x</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for visualization</span></span>
@@ -378,10 +391,10 @@ First order means that in the limit <span class="math inline">\(\mathsf{h\righta
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> func(x)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Exact solution at x=0.85</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>fp_exactly <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.cos(<span class="dv">3</span><span class="op">*</span><span class="fl">0.85</span>) <span class="op">+</span> <span class="dv">2</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>fp_exactly <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.cos(<span class="dv">3</span><span class="op">*</span><span class="fl">0.85</span>) <span class="op">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="41b7331f" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expansion point and step size</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expansion point and step size</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.25</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -390,12 +403,12 @@ First order means that in the limit <span class="math inline">\(\mathsf{h\righta
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fh <span class="op">=</span> func(x0 <span class="op">+</span> h)</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determination of the derivative approximation</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> (fh <span class="op">-</span> f0) <span class="op">/</span> h</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> (fh <span class="op">-</span> f0) <span class="op">/</span> h</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="16ca9343" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The numerical approximation of the derivative at the point </span><span class="sc">{</span>x0<span class="sc">:.2f}</span><span class="ss">:"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The numerical approximation of the derivative at the point </span><span class="sc">{</span>x0<span class="sc">:.2f}</span><span class="ss">:"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Approximation with step size </span><span class="sc">{</span>h<span class="sc">:.2f}</span><span class="ss">: </span><span class="sc">{</span>fp<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Exact value: </span><span class="sc">{</span>fp_exactly<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Exact value: </span><span class="sc">{</span>fp_exactly<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The numerical approximation of the derivative at the point 0.85:
 Approximation with step size 0.25: -0.86
@@ -404,7 +417,7 @@ Exact value: -0.49</code></pre>
 </div>
 <p>The method can also be illustrated graphically. The desired slope is the slope of the straight line shown in the plot.</p>
 <div id="2861906b" class="cell" data-tags="[&quot;hide_input&quot;]" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">"Function"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">"Function"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.scatter([x0], [f0], color<span class="op">=</span><span class="st">'C3'</span>, label<span class="op">=</span><span class="st">'Expansion point'</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.scatter([x0<span class="op">+</span>h], [fh], color<span class="op">=</span><span class="st">'C4'</span>, label<span class="op">=</span><span class="st">'Evaluation points'</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -415,7 +428,7 @@ Exact value: -0.49</code></pre>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="fl">1.0</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)<span class="op">;</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="fl">1.0</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -425,8 +438,8 @@ Exact value: -0.49</code></pre>
 </div>
 </div>
 </section>
-<section id="second-order-first-derivative" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="second-order-first-derivative"><span class="header-section-number">2.2.2</span> Second-Order First Derivative</h3>
+<section id="second-order-first-derivative" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="second-order-first-derivative"><span class="header-section-number">3.2.2</span> Second-Order First Derivative</h3>
 <p>Using the same approach, a second-order difference formula can also be derived. For this, the func is approximated at the points <span class="math inline">\(\mathsf{x_0-h}\)</span> and <span class="math inline">\(\mathsf{x_0+h}\)</span> using the Taylor series up to order <span class="math inline">\(\mathsf{\mathcal{O}(h^3)}\)</span>.</p>
 <p><span class="math display">\[\mathsf{f(x_0+h) = f(x_0) + f'(x_0)\cdot h + \frac{1}{2}f''(x_0)\cdot h^2 + \mathcal{O}(h^3)} \]</span> <span class="math display">\[\mathsf{f(x_0-h) = f(x_0) - f'(x_0)\cdot h + \frac{1}{2}f''(x_0)\cdot h^2 + \mathcal{O}(h^3)} \]</span></p>
 <p>The difference between these two equations gives</p>
@@ -435,17 +448,17 @@ Exact value: -0.49</code></pre>
 <p><span class="math display">\[\mathsf{f'(x_0) = \frac{f(x_0+h) - f(x_0-h)}{2h} + \mathcal{O}(h^2)} \]</span></p>
 <p>This is the central difference formula for the first derivative with second-order accuracy. As with the forward formula, the func must be evaluated at two points, but not at the expansion point itself. This symmetry around the expansion point results in improved convergence behavior, which is quadratic in this case.</p>
 <div id="1a0e75d0" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the func at both points</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the func at both points</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fmh <span class="op">=</span> func(x0 <span class="op">-</span> h)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>fph <span class="op">=</span> func(x0 <span class="op">+</span> h)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the derivative approximation</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> (fph <span class="op">-</span> fmh) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>h)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> (fph <span class="op">-</span> fmh) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>h)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="921215f7" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The numerical approximation of the derivative at the point </span><span class="sc">{</span>x0<span class="sc">:.2f}</span><span class="ss">:"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The numerical approximation of the derivative at the point </span><span class="sc">{</span>x0<span class="sc">:.2f}</span><span class="ss">:"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Approximation with step size </span><span class="sc">{</span>h<span class="sc">:.2f}</span><span class="ss">: </span><span class="sc">{</span>fp<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Exact value: </span><span class="sc">{</span>fp_exactly<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Exact value: </span><span class="sc">{</span>fp_exactly<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The numerical approximation of the derivative at the point 0.85:
 Approximation with step size 0.25: -0.26
@@ -454,7 +467,7 @@ Exact value: -0.49</code></pre>
 </div>
 <p>The method can also be represented graphically. The slope sought is the slope of the straight lines drawn.</p>
 <div id="5add9190" class="cell" data-tags="[&quot;hide_input&quot;]" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">"Function"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">"Function"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.scatter([x0], [f0], color<span class="op">=</span><span class="st">'C3'</span>, label<span class="op">=</span><span class="st">'Expansion Point'</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.scatter([x0<span class="op">-</span>h, x0<span class="op">+</span>h], [fmh, fph], color<span class="op">=</span><span class="st">'C4'</span>, label<span class="op">=</span><span class="st">'Evaluation Points'</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -465,7 +478,7 @@ Exact value: -0.49</code></pre>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="fl">1.0</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)<span class="op">;</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="fl">1.0</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -476,21 +489,21 @@ Exact value: -0.49</code></pre>
 </div>
 </section>
 </section>
-<section id="second-order-derivative" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="second-order-derivative"><span class="header-section-number">2.3</span> Second-Order Derivative</h2>
+<section id="second-order-derivative" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="second-order-derivative"><span class="header-section-number">3.3</span> Second-Order Derivative</h2>
 <p>Using the same scheme as above, the finite difference formula for the second derivative can also be determined. It is given by</p>
 <p><span class="math display">\[\mathsf{f''(x_0) = \frac{f(x_0-h) - 2f(x_0) + f(x_0+h)}{h^2} + \mathcal{O}(h^2)}\]</span></p>
 </section>
-<section id="error-analysis" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="error-analysis"><span class="header-section-number">2.4</span> Error Analysis</h2>
+<section id="error-analysis" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="error-analysis"><span class="header-section-number">3.4</span> Error Analysis</h2>
 <p>In this section, approximation errors, i.e., errors arising from difference formulas, and rounding errors, i.e., errors due to the finite precision of digital number representation, are considered.</p>
-<section id="approximation-error" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="approximation-error"><span class="header-section-number">2.4.1</span> Approximation Error</h3>
+<section id="approximation-error" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="approximation-error"><span class="header-section-number">3.4.1</span> Approximation Error</h3>
 <p>The order of the method can be determined by analyzing the error, here with respect to the known exact value. For this purpose, the step size is continuously reduced.</p>
 <div id="5d7b82b1" class="cell" data-tags="[&quot;hide-input&quot;]" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fkt(x):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fkt(x):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sin(<span class="dv">3</span><span class="op">*</span>x) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>x</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for visualization</span></span>
@@ -498,13 +511,13 @@ Exact value: -0.49</code></pre>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fkt(x)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Exact solution at x=1</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>fp_exact <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.cos(<span class="dv">3</span><span class="op">*</span><span class="fl">0.85</span>) <span class="op">+</span> <span class="dv">2</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>fp_exact <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.cos(<span class="dv">3</span><span class="op">*</span><span class="fl">0.85</span>) <span class="op">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="528c501d" class="cell" data-tags="[&quot;hide-input&quot;]" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>hs <span class="op">=</span> []</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fpfs <span class="op">=</span> []</span>
@@ -523,13 +536,13 @@ Exact value: -0.49</code></pre>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    hs.append(h)</span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    fpfs.append(fpf)</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    fpcs.append(fpc)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    fpcs.append(fpc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="d806bf69" class="cell" data-tags="[&quot;hide-input&quot;]" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.plot(hs, np.<span class="bu">abs</span>(fpfs <span class="op">-</span> fp_exact), label<span class="op">=</span><span class="st">'forward'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.plot(hs, np.<span class="bu">abs</span>(fpfs <span class="op">-</span> fp_exact), label<span class="op">=</span><span class="st">'forward'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.plot(hs, np.<span class="bu">abs</span>(fpcs <span class="op">-</span> fp_exact), label<span class="op">=</span><span class="st">'central'</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="fl">1e-5</span>, <span class="fl">1e-1</span>], [<span class="fl">1e-5</span>, <span class="fl">1e-1</span>], <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">'guide lines'</span>)</span>
@@ -542,7 +555,7 @@ Exact value: -0.49</code></pre>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">'log'</span>)</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.grid()<span class="op">;</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.grid()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -554,13 +567,13 @@ Exact value: -0.49</code></pre>
 </div>
 <p>In the logarithmic representation of both axes, power functions become straight lines with the exponent as the slope. This means that the error in the above plot behaves like a power function of degree one and two, respectively. The auxiliary lines that are drawn have slopes of one and two, respectively. This also corresponds to the order <span class="math inline">\(\mathsf{\mathcal{O}(h)}\)</span> and <span class="math inline">\(\mathsf{\mathcal{O}(h^2)}\)</span> from the difference formula.</p>
 </section>
-<section id="rounding-errors" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="rounding-errors"><span class="header-section-number">2.4.2</span> Rounding Errors</h3>
+<section id="rounding-errors" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="rounding-errors"><span class="header-section-number">3.4.2</span> Rounding Errors</h3>
 <p>If the step size is reduced even further, the precision of number representation, i.e., rounding errors, begins to affect the approximation.</p>
 <div id="e5e8aa6a" class="cell" data-tags="[&quot;hide-input&quot;]" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">0.85</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>hs <span class="op">=</span> []</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>fpfs <span class="op">=</span> []</span>
@@ -580,13 +593,13 @@ Exact value: -0.49</code></pre>
 <span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    hs.append(h)</span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    fpfs.append(fpf)</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    fpcs.append(fpc)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    fpcs.append(fpc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="4dca2f24" class="cell" data-tags="[&quot;hide-input&quot;]" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.plot(hs, np.<span class="bu">abs</span>(fpfs <span class="op">-</span> fp_exact), label<span class="op">=</span><span class="st">'forward'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.plot(hs, np.<span class="bu">abs</span>(fpfs <span class="op">-</span> fp_exact), label<span class="op">=</span><span class="st">'forward'</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.plot(hs, np.<span class="bu">abs</span>(fpcs <span class="op">-</span> fp_exact), label<span class="op">=</span><span class="st">'central'</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="fl">1e-5</span>, <span class="fl">1e-1</span>], [<span class="fl">1e-5</span>, <span class="fl">1e-1</span>], <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">'reference lines'</span>)</span>
@@ -599,7 +612,7 @@ Exact value: -0.49</code></pre>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">'log'</span>)</span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>plt.grid()<span class="op">;</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>plt.grid()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -646,12 +659,12 @@ Exact value: -0.49</code></pre>
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Kopiert");
+      button.setAttribute("title", "Copied!");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Kopiert");
+        button.setAttribute("data-bs-title", "Copied!");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
@@ -672,13 +685,14 @@ Exact value: -0.49</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1023,7 +1037,7 @@ Exact value: -0.49</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../skript/intro_integrale.html" class="pagination-link" aria-label="Integration">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Integration</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Integration</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1034,4 +1048,4 @@ Exact value: -0.49</code></pre>
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/m-numerik/blob/main/skript/intro_ableitungen.qmd" class="toc-action"><i class="bi bi-github"></i>Quellcode anzeigen</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/bausteine-der-datenanalyse/m-numerik-en/blob/main/skript/intro_ableitungen.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
