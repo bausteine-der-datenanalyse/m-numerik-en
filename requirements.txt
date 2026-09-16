@@ -1,4 +1,1 @@
-jupyter
-numpy
-matplotlib
-seaborn
+
