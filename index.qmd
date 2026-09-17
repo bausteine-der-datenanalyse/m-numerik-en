@@ -9,7 +9,7 @@ Modules for Computer-Assisted Data Analysis. "Numerics" by Lukas Arnold,
 Simone Arnold, Florian Bagemihl, Matthias Baitsch, Marc Fehr, Maik Poetzsch, and 
 Sebastian Seipel is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en). 
 The work is available at <https://github.com/bausteine-der-datenanalyse/m-numerik-en>.
-All logos and content marked otherwise are excluded from the license. 2024
+All logos and content marked otherwise are excluded from the license. 2026
 
 :::
 
